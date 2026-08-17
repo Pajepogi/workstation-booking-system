@@ -60,3 +60,38 @@ export const getUsers = async () => {
   const response = await apiClient.get("/Users");
   return response.data;
 };
+
+export interface UpdateProfileRequest {
+  fullName: string;
+  email: string;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export const updateProfile = async (payload: UpdateProfileRequest) => {
+  const response = await apiClient.put("/Users/profile", payload);
+
+  const currentUser = getCurrentUser();
+
+  if (currentUser) {
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify({
+        ...currentUser,
+        fullName: payload.fullName,
+        email: payload.email,
+      }),
+    );
+  }
+
+  return response.data;
+};
+
+export const changePassword = async (payload: ChangePasswordRequest) => {
+  const response = await apiClient.put("/Users/change-password", payload);
+
+  return response.data;
+};
