@@ -1,0 +1,6 @@
+@wbs_api_HostAddress = http://localhost:5155
+
+GET {{wbs_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
